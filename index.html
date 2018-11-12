@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<link rel="stylesheet" href="css/reset.css">
+	<link href='https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,700' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+	<div id="nav">
+		<div id="title" class="nav-item">
+			<i class="fa fa-info-circle"></i>
+			<span id="title-text">Laden with Terror</span>
+		</div>
+		<div id="date" class="nav-item" style="display: none">
+			<i id="left" class="fa fa-caret-left fa-caret no-select"></i>
+			<div id="output"></div>
+			<i id="right" class="fa fa-caret-right fa-caret no-select"></i>
+		</div>
+	</div>
+
+	<div id="content-un-fixed">
+  		<div id="list-outer-container">
+			<div id="sections-words">
+				<span class="toggle-graph selected-graph">Osama bin Laden</span><span class="divider">|</span><span class="toggle-graph">Saddam Hussein (overlay)</span>
+			</div>
+			<div id="container">
+				<div id="chart">
+					<div class="spinner">
+					  <div class="double-bounce1"></div>
+					  <div class="double-bounce2"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="stats">
+			<div class="outer-stat-item">
+				<div class="time-interval">
+					<span class="toggle-component selected-component init">This Month</span><span class="divider">|</span><span class="toggle-component">Total</span>
+				</div>
+				<div class="stat-item no-select">
+					<span class="stat-title">Osama bin Laden</span> 
+					<span class="data" id="this-month"><span class='rotating'>–</span></span>
+				</div>
+			</div>
+			<div class="outer-stat-item">
+				<div class="time-interval">
+					<span class="toggle-component selected-component init">This Month</span><span class="divider">|</span><span class="toggle-component">Total</span>
+				</div>
+				<div class="stat-item no-select">
+					<span class="stat-title">Saddam Hussein</span> 
+					<span class="data" id="monthly-word-avg"><span class='rotating'>–</span></span>
+				</div>
+			</div>
+			<div class="outer-stat-item">
+				<div class="time-interval">
+					<span class="toggle-component selected-component init">This Month</span><span class="divider">|</span><span class="toggle-component">Total</span>
+				</div>
+				<div class="stat-item no-select">
+					<span class="stat-title">Hussein overlap <i class="fa fa-exchange"></i></span> 
+					<span class="data" id="daily-article-avg"><span class='rotating'>–</span></span>
+				</div>
+			</div>
+		</div>
+
+		<div id="template_holder"></div>
+
+	    <div id="about"> 
+	      <div id="about-text">
+	        <h1>What is this?</h1>
+	        <p> 
+		        This visualization uses the <a href="http://developer.nytimes.com/article_search_v2.json" target="_blank">New York Times' Article Search API</a> to examine how America's most popular news publication framed the discussion surrounding the most-wanted terrorist, Osama bin Laden, during the decade between 9/11 and his assassination in May of 2011. Saddam Hussein is not the main focus of this visualization – and has been included merely to relativize the New York Times' discussion surrounding the main culprit behind 9/11, Osama bin Laden.
+	        </p>
+ 	        <h1>How do I use this?</h1>
+	        <p>
+		    	You can examine any article from the <a href="http://developer.nytimes.com/article_search_v2.json" target="_blank">New York Times</a> between January 2001 and December 2012 than mentions 'Osama bin Laden' by name. To select a month, either click & drag directly on the chart, or click <i class='fa fa-caret-left'></i> <i class='fa fa-caret-right'></i> on the navigation bar. If you click on one of the resulting headlines, the first paragraph from the New York Times article where Osama bin Laden's name is mentioned will be revealed. To read the source article, click the link provided below the snippet.
+	        </p>
+	        <p>
+	        	You can select <span>'Saddan Hussein (overlay)'</span> above the graph component to view an area graph of how frequently the NY Times wrote articles that mention Saddam Hussein. On each of the three components below the graph, you can toggle between <span>This Month</span> (articles from the currently selected month) and <span>Total</span> (all articles between January 2000 & December 2012) for an aggregated sum of articles. You can also toggle between <span>Sections</span> (the sections of the NY Times in which articles mentioning 'Osama bin Laden' appeared) and the Top Words (the top 20 words that emerge when aggregating all the articles in mentioning 'Osama bin Laden').
+	        </p>
+		    <p class="created-by">
+				Created by: <a href='http://datalooksdope.com'>DataLooksDope.com</a>
+			</p>
+	      </div>
+	      <i class="fa fa-close close-about"></i>
+	    </div>
+
+		<footer style="display: none">
+			<span>created by<span> <a href='http://datalooksdope.com'>DataLooksDope.com</a>
+		</footer>
+
+	</div>
+
+  	<script id="template" type="text/template">
+  		<div id="list-outer-container">
+			<div id="sections-words">
+				<span class="toggle-list selected-list">Sections</span><span class="divider">|</span><span class="toggle-list">Top Words</span>
+			</div>
+	  		<ul class="section-list">
+	  			{{#sections}}
+	  				<li class="section-list-item">
+		  				<table class="section-table">
+			  				<tr class="wrapper">
+			  				  	<td class="count">{{count}}</td>
+			  					<td class="section-name">{{section}}</td> 
+			  				</tr>
+		  				</table>
+	  				</li>
+	   			{{/sections}}
+	  		</ul>
+	  		<ul class="words-list">
+	  			{{#words}}
+	  				<li class="word-list-item">
+		  				<table class="list-table">
+			  				<tr class="wrapper">
+			  				  	<td class="count list-count">{{count}}</td>
+			  					<td class="section-name">{{word}}</td> 
+			  				</tr>
+		  				</table>
+	  				</li>
+	   			{{/words}}
+	  		</ul>
+  		</div>
+  		<table class="articles-table">
+  			{{#articles}}
+  			<tbody class="articles-container">
+  				<tr class="articles-row">
+  					<td class="td-date">{{h.2}}</td>
+  					<td class="td-title">{{h.0}}</td>
+  					<td class="td-paragraph view-snippet">
+  						<i class="fa fa-angle-down"></i>
+  					</td>
+  				</tr>
+				<tr class="toggle-row" style="display: none">
+					<td class="toggle-td" colspan="3">
+					  <span class='toggle-text'></span>
+					</td>
+				</tr>
+				<tr class="toggle-row-link" style="display: none">
+					<td class="toggle-td-link" colspan="3">
+					  <span class='toggle-nyt-link'></span>
+					</td>
+				</tr>
+  			</tbody>
+  			{{/articles}}
+  		</table>
+  	</script>
+	<script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.16/d3.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.2.1/mustache.min.js"></script>
+	<script src="https://cdn.rawgit.com/nnattawat/flip/v1.0.20/dist/jquery.flip.min.js"></script>
+	<script src="animateNumber.min.js"></script>
+	<script src="jquery-numerator.js"></script>
+	<script src="js/main.js"></script>
+	</body>
+</html>
